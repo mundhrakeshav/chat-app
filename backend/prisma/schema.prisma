@@ -24,7 +24,7 @@ model Chat {
 model User {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   name              String    
-  email             String
+  email             String    @unique
   password          String
   picture           String    @default("https://icon-library.com/images/anonymous-icon/anonymous-icon-0.jpg")
   chatIDs           String[]  @db.ObjectId
