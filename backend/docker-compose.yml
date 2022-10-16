@@ -1,5 +1,5 @@
 version: '3.7'
-# Using docker to start 
+# Using docker to start mongo replica set
 services:
   mongo:
     build: .
