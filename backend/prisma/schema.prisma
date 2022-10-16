@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// https://github.com/prisma/prisma/blob/93b3ac53d637fad960d51b3c972bf6a3e2f0a7ac/docker/mongodb_replica/Dockerfile#L1
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Chat {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  isGroupChat       Boolean   @default(false) @db.Bool
+  userIDs           String[]  @db.ObjectId
+  users             User[]    @relation("USERS", fields: [userIDs], references: [id])
+  groupAdmins       User[]    @relation("ADMINS", fields: [userIDs], references: [id])
+  messages          Message[]
+
+  @@map("chats")
+}
+
+model User {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String    
+  email             String
+  password          String
+  picture           String    @default("https://icon-library.com/images/anonymous-icon/anonymous-icon-0.jpg")
+  chatIDs           String[]  @db.ObjectId
+  chats             Chat[]    @relation("USERS", fields: [chatIDs], references: [id])
+  adminChats        Chat[]    @relation("ADMINS", fields: [chatIDs], references: [id])
+  createdAt         DateTime  @default(now()) @db.Timestamp
+  messages          Message[]
+
+  @@map("users")
+}
+
+model Message {
+  id                String    @id @default(cuid()) @map("_id") @db.ObjectId
+  content           String    
+  senderID          String    @db.ObjectId
+  sender            User      @relation(fields: [senderID], references: [id])
+  chatID            String    @db.ObjectId
+  chat              Chat      @relation(fields: [chatID], references: [id])
+  timeStamp         DateTime  @default(now()) @db.Timestamp 
+}
