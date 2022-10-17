@@ -1,4 +1,4 @@
-import { Box, Container, Grid, GridItem, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Box, Container, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import Login from "../components/Auth/Login";
 import SignUp from "../components/Auth/SignUp";
 

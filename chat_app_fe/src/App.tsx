@@ -4,7 +4,6 @@ import HomePage from "./pages/home"
 import ChatsPage from "./pages/chats"
 import "./App.css";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
-
 export const App = () => (
 	<ChakraProvider theme={theme}>
 		<Flex h="30px" justifyContent="flex-end" maxW="1100px" m="auto"> <ColorModeSwitcher/> </Flex>

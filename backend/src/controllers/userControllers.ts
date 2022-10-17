@@ -6,6 +6,7 @@ import prismaClient from "../prismaClient";
 
 const registerUser = async (req: Request, res: Response) => {
     const { name, email, password, picture } = req.body;
+    console.log(name, email, password, picture, "LOG1");
     
     if (!name ?? !email ?? !password) {
         return res.status(400).send("Name, Email, Password undefined");
@@ -23,6 +24,7 @@ const registerUser = async (req: Request, res: Response) => {
 
 const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
+    console.log(email, password);
     
     if (!email ?? !password) {
         return res.status(400).send(" Email, Password undefined");
@@ -33,8 +35,7 @@ const loginUser = async (req: Request, res: Response) => {
     if (_user && (await bcryptHashCompare(password, _user.password))) {
         return res.status(200).json({..._user, token: generateToken(_user.id)})
     }
-
-    // const _createdUser = await prismaClient.user.create({ data: { name, email, password, picture } });
+    return res.status(400).json("User not found")
 }
 
 export { registerUser, loginUser };
