@@ -2,7 +2,7 @@ import express, { Request, Response, Express } from "express";
 import cors from "cors";
 import * as dotenv from 'dotenv'
 import prismaClient from "./prismaClient";
-import { userRouter } from "./routes";
+import { chatRouter, userRouter } from "./routes";
 
 dotenv.config()
 
@@ -18,6 +18,7 @@ app.use(express.json())
 // })
 
 app.use("/api/user", userRouter);
+app.use("/api/chat", chatRouter);
 
 // app.get("/chats", (req: Request, res: Response) => {    
 //     return res.send("Hey")

@@ -12,12 +12,15 @@ datasource db {
 
 model Chat {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  chatName          String?    
   isGroupChat       Boolean   @default(false) @db.Bool
   userIDs           String[]  @db.ObjectId
   users             User[]    @relation("USERS", fields: [userIDs], references: [id])
-  groupAdmins       User[]    @relation("ADMINS", fields: [userIDs], references: [id])
+  adminIDs          String[]  @db.ObjectId
+  groupAdmins       User[]    @relation("ADMINS", fields: [adminIDs], references: [id])
   messages          Message[]
-
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
   @@map("chats")
 }
 
@@ -29,15 +32,17 @@ model User {
   picture           String    @default("https://icon-library.com/images/anonymous-icon/anonymous-icon-0.jpg")
   chatIDs           String[]  @db.ObjectId
   chats             Chat[]    @relation("USERS", fields: [chatIDs], references: [id])
-  adminChats        Chat[]    @relation("ADMINS", fields: [chatIDs], references: [id])
-  createdAt         DateTime  @default(now()) @db.Timestamp
+  adminChatIDs      String[]  @db.ObjectId
+  adminChats        Chat[]    @relation("ADMINS", fields: [adminChatIDs], references: [id])
   messages          Message[]
+  createdAt         DateTime  @default(now()) @db.Timestamp
+  updatedAt         DateTime  @updatedAt @db.Timestamp
 
   @@map("users")
 }
 
 model Message {
-  id                String    @id @default(cuid()) @map("_id") @db.ObjectId
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
   content           String    
   senderID          String    @db.ObjectId
   sender            User      @relation(fields: [senderID], references: [id])
