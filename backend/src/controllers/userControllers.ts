@@ -52,6 +52,7 @@ const loginUser = async (req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
     const { search } = req.query;
+    
     if (!search) {
         return res.status(400).send("No search query")
     }    

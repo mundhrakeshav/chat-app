@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import prismaClient from "../prismaClient";
 
-async function protect(req: Request, res: Response, next: NextFunction) {
+async function protect(req: Request, res: Response, next: NextFunction) {    
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith("Bearer")) {
         try {

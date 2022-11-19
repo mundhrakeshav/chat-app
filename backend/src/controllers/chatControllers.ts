@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import prismaClient from "../prismaClient";
 
 async function accessChat(req: Request, res: Response) {
-    const {userID} = req.body;
+    const { userID } = req.body;
+    
     if (!userID) {
         return res.status(404).send("!UserID")
     }    

@@ -26,7 +26,7 @@ const Login = () => {
         try {
             const response = await backendInstance.post("/api/user/login", { email, password });
             localStorage.setItem("userInfo", JSON.stringify(response.data));
-                        navigate("/chats");
+            navigate("/chats");
         } catch (error) {
             return toast({
                 title: `Error in call ${error}`,
